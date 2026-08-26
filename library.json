@@ -1,0 +1,21 @@
+{
+  "name": "BBRDigitalExpander",
+  "version": "1.0.0",
+  "description": "Driver for the BBR Digital Expander: four encoder inputs, four colour/distance sensor ports, four condition-driven digital outputs, an IMU and an onboard odometry localizer, over one I2C connection.",
+  "keywords": "i2c, encoder, quadrature, color, distance, imu, odometry, robotics, ftc",
+  "homepage": "https://expander.buildingblockrobotics.com/",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Building Block Robotics",
+      "url": "https://buildingblockrobotics.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BuildingBlockRobotics/DigitalExpander-Arduino.git"
+  },
+  "frameworks": "arduino",
+  "platforms": "*",
+  "headers": "BBRDigitalExpander.h"
+}

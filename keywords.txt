@@ -1,0 +1,113 @@
+#######################################
+# Syntax colouring for BBRDigitalExpander
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+BBRDigitalExpander	KEYWORD1
+BBRStatus	KEYWORD1
+BBRSensorType	KEYWORD1
+BBRChannelMode	KEYWORD1
+BBROutputSource	KEYWORD1
+BBROutputMode	KEYWORD1
+BBRLocalizerStatus	KEYWORD1
+BBRSensorReading	KEYWORD1
+BBRTelemetry	KEYWORD1
+BBRImuState	KEYWORD1
+BBRPose	KEYWORD1
+BBRLocalizerState	KEYWORD1
+BBRLocalizerParams	KEYWORD1
+BBRColorClass	KEYWORD1
+BBRDistanceClass	KEYWORD1
+BBROutputConfig	KEYWORD1
+
+#######################################
+# Methods and functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+ok	KEYWORD2
+lastStatus	KEYWORD2
+lastErrorText	KEYWORD2
+lastCommandResult	KEYWORD2
+printDeviceInfo	KEYWORD2
+isOdometryVariant	KEYWORD2
+hasCapability	KEYWORD2
+encoderCount	KEYWORD2
+encoderVelocity	KEYWORD2
+pulseWidthUs	KEYWORD2
+resetEncoder	KEYWORD2
+resetAllEncoders	KEYWORD2
+resetEncoders	KEYWORD2
+sensorConnected	KEYWORD2
+sensorType	KEYWORD2
+colorClass	KEYWORD2
+seesColor	KEYWORD2
+distanceMm	KEYWORD2
+teachColor	KEYWORD2
+triggerOnColor	KEYWORD2
+triggerWhenNear	KEYWORD2
+triggerWhenEncoderPast	KEYWORD2
+triggerWhenFacing	KEYWORD2
+disableOutput	KEYWORD2
+outputState	KEYWORD2
+outputLatched	KEYWORD2
+clearOutputLatch	KEYWORD2
+clearAllOutputLatches	KEYWORD2
+clearOutputLatches	KEYWORD2
+heading	KEYWORD2
+resetHeading	KEYWORD2
+calibrateGyro	KEYWORD2
+readTelemetry	KEYWORD2
+readImu	KEYWORD2
+setTelemetryMaxAgeMs	KEYWORD2
+invalidateTelemetry	KEYWORD2
+deviceStatus	KEYWORD2
+isConfigDirty	KEYWORD2
+saveConfigToFlash	KEYWORD2
+loadFactoryDefaults	KEYWORD2
+clearFaults	KEYWORD2
+encoderPinState	KEYWORD2
+setChannelMode	KEYWORD2
+setChannelModes	KEYWORD2
+getChannelMode	KEYWORD2
+setPwmWrapEnabled	KEYWORD2
+setPwmWrapMask	KEYWORD2
+setPwmChannelParams	KEYWORD2
+getPwmChannelParams	KEYWORD2
+setEncoderInvertMask	KEYWORD2
+getEncoderInvertMask	KEYWORD2
+setImuAxisUp	KEYWORD2
+getImuAxisUp	KEYWORD2
+writeColorClass	KEYWORD2
+writeDistanceClass	KEYWORD2
+configureOutput	KEYWORD2
+readLocalizerRaw	KEYWORD2
+readLocalizer	KEYWORD2
+getPose	KEYWORD2
+setPose	KEYWORD2
+setLocalizerParams	KEYWORD2
+getLocalizerParams	KEYWORD2
+resetLocalizerAndCalibrateImu	KEYWORD2
+waitForLocalizerReady	KEYWORD2
+runCommand	KEYWORD2
+readRegisters	KEYWORD2
+writeRegisters	KEYWORD2
+readRegister	KEYWORD2
+writeRegister	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+BBR_I2C_ADDR_DEFAULT	LITERAL1
+BBR_STYPE_COLOR	LITERAL1
+BBR_STYPE_DISTANCE	LITERAL1
+BBR_STYPE_EMPTY	LITERAL1
+BBR_AXIS_POS_Z	LITERAL1
+BBR_CAP_ENCODERS	LITERAL1
+BBR_CAP_COLOR	LITERAL1
+BBR_CAP_IMU	LITERAL1
+BBR_CAP_DOUT	LITERAL1
