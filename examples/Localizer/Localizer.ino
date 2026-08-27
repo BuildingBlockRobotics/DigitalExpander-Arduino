@@ -54,6 +54,7 @@ void setup() {
       delay(1000);
     }
   }
+  expander.saveConfigToFlash();  // parameters do NOT save themselves
 
   // DIRECTION. The localizer needs forward and left travel to BOTH count
   // positive. It reads the channels itself, so flipping a sign in this sketch
@@ -62,9 +63,9 @@ void setup() {
   // Push the robot to find out which way each pod counts: driving forward
   // should raise the X count, strafing left should raise Y. If one goes the
   // wrong way, change its Forward to Reverse.
+  // These two DO save themselves, so the direction survives a reboot.
   expander.setEncoderDirection(0, BBREncoderDirection::Forward);  // X pod
   expander.setEncoderDirection(1, BBREncoderDirection::Forward);  // Y pod
-  expander.saveConfigToFlash();
 
   startLocalizer();
 }

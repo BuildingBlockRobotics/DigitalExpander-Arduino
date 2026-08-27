@@ -596,9 +596,12 @@ bool BBRDigitalExpander::setEncoderDirection(uint8_t channel,
     int16_t mask = getEncoderInvertMask();
     if (mask < 0) return false;
     uint8_t bit = (uint8_t)(1u << channel);
-    return setEncoderInvertMask(direction == BBREncoderDirection::Reverse
-                                    ? (uint8_t)(mask | bit)
-                                    : (uint8_t)(mask & ~bit));
+    if (!setEncoderInvertMask(direction == BBREncoderDirection::Reverse
+                                  ? (uint8_t)(mask | bit)
+                                  : (uint8_t)(mask & ~bit))) {
+        return false;
+    }
+    return autoSaveIfDirty();
 }
 
 bool BBRDigitalExpander::getEncoderDirection(uint8_t channel,

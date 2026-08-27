@@ -447,8 +447,13 @@ class BBRDigitalExpander {
      * never reaches it. Push the robot and check — driving forward should
      * raise the X pod's count, strafing left should raise the Y pod's.
      *
-     * Written to RAM: call saveConfigToFlash() afterwards, or the direction
-     * is back to front again after a power cycle.
+     * Saved to flash automatically, so the direction survives a power cycle —
+     * a channel that counts backwards after every reboot is a bug nobody
+     * traces back to a missing save call. Setting the same direction
+     * repeatedly costs nothing: the firmware compares the payload it would
+     * write against what is already stored and skips the write.
+     *
+     * Like the other setup helpers, run this once rather than in a loop.
      */
     bool setEncoderDirection(uint8_t channel, BBREncoderDirection direction);
     /** Which way `channel` (0-3) currently counts. */
