@@ -590,6 +590,27 @@ bool BBRDigitalExpander::getPwmChannelParams(uint8_t channel, uint16_t &minUs,
     return succeed();
 }
 
+bool BBRDigitalExpander::setEncoderDirection(uint8_t channel,
+                                            BBREncoderDirection direction) {
+    if (!checkChannel(channel)) return false;
+    int16_t mask = getEncoderInvertMask();
+    if (mask < 0) return false;
+    uint8_t bit = (uint8_t)(1u << channel);
+    return setEncoderInvertMask(direction == BBREncoderDirection::Reverse
+                                    ? (uint8_t)(mask | bit)
+                                    : (uint8_t)(mask & ~bit));
+}
+
+bool BBRDigitalExpander::getEncoderDirection(uint8_t channel,
+                                            BBREncoderDirection &out) {
+    if (!checkChannel(channel)) return false;
+    int16_t mask = getEncoderInvertMask();
+    if (mask < 0) return false;
+    out = (mask & (1 << channel)) ? BBREncoderDirection::Reverse
+                                  : BBREncoderDirection::Forward;
+    return succeed();
+}
+
 bool BBRDigitalExpander::setEncoderInvertMask(uint8_t mask) {
     if (!checkRange(F("invert mask must be 0-15"), mask, 0, kAllChannels)) return false;
     return writeVerified(BBR_REG_ENC_INVERT_MASK, mask,

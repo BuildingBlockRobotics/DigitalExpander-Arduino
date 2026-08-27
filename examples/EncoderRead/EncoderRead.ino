@@ -25,8 +25,9 @@ void setup() {
       delay(1000);
     }
   }
-  // Bit n inverts channel n, for when a motor is mounted mirrored.
-  expander.setEncoderInvertMask(0b0000);
+  // For a motor mounted mirrored, tell the board which way that channel
+  // should count rather than negating the number everywhere you use it.
+  expander.setEncoderDirection(0, BBREncoderDirection::Forward);
   expander.resetAllEncoders();
   Serial.println(F("Send 'r' to zero the encoders."));
 }

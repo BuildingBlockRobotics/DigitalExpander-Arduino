@@ -65,6 +65,9 @@ enum class BBRSensorType : uint8_t {
 
 enum class BBRChannelMode : uint8_t { Quadrature = 0, PulseWidth = 1 };
 
+/** Which way an encoder channel counts. */
+enum class BBREncoderDirection : uint8_t { Forward = 0, Reverse = 1 };
+
 /** What drives a digital output. */
 enum class BBROutputSource : uint8_t {
     Disabled = BBR_DOUT_SRC_DISABLED,
@@ -188,7 +191,10 @@ struct BBRLocalizerState {
     bool gyroEverSaturated() const { return (flags & BBR_LOCF_GYRO_SATURATED_EVER) != 0; }
     /** True while the pose sits outside +/-32.7 m and reads clamped. */
     bool poseClipped() const { return (flags & BBR_LOCF_POSE_CLIPPED) != 0; }
-    /** True when a pod's encoder channel is claimed by another feature. */
+    /** True if a pod channel's invert mask, mode or PWM parameters changed
+     *  while the localizer was running. One tick delta was swallowed rather
+     *  than integrated as a jump, so the pose is missing it; latched. Set
+     *  direction and mode at setup, before starting the localizer. */
     bool portConflict() const { return (flags & BBR_LOCF_PORT_CONFLICT) != 0; }
 };
 
@@ -431,7 +437,26 @@ class BBRDigitalExpander {
     bool setPwmChannelParams(uint8_t channel, uint16_t minUs, uint16_t maxUs);
     bool getPwmChannelParams(uint8_t channel, uint16_t &minUs, uint16_t &maxUs);
 
-    /** Per-channel encoder direction: bit n set inverts channel n. */
+    /**
+     * Make `channel` (0-3) count UP when the thing it measures moves the way
+     * you consider forward. `Reverse` flips both the count and the velocity.
+     *
+     * This is the fix for an encoder that counts backwards, and it belongs
+     * here rather than in your sketch: the odometry localizer reads the
+     * channels straight off the board, so flipping a sign in your own code
+     * never reaches it. Push the robot and check — driving forward should
+     * raise the X pod's count, strafing left should raise the Y pod's.
+     *
+     * Written to RAM: call saveConfigToFlash() afterwards, or the direction
+     * is back to front again after a power cycle.
+     */
+    bool setEncoderDirection(uint8_t channel, BBREncoderDirection direction);
+    /** Which way `channel` (0-3) currently counts. */
+    bool getEncoderDirection(uint8_t channel, BBREncoderDirection &out);
+
+    /** All four channels at once as a bitmask: bit n set inverts channel n.
+     *  setEncoderDirection() says the same thing one channel at a time and
+     *  reads better; this sets several in one transaction. */
     bool setEncoderInvertMask(uint8_t mask);
     int16_t getEncoderInvertMask();
 

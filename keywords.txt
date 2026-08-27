@@ -10,6 +10,7 @@ BBRDigitalExpander	KEYWORD1
 BBRStatus	KEYWORD1
 BBRSensorType	KEYWORD1
 BBRChannelMode	KEYWORD1
+BBREncoderDirection	KEYWORD1
 BBROutputSource	KEYWORD1
 BBROutputMode	KEYWORD1
 BBRLocalizerStatus	KEYWORD1
@@ -77,6 +78,8 @@ setPwmWrapEnabled	KEYWORD2
 setPwmWrapMask	KEYWORD2
 setPwmChannelParams	KEYWORD2
 getPwmChannelParams	KEYWORD2
+setEncoderDirection	KEYWORD2
+getEncoderDirection	KEYWORD2
 setEncoderInvertMask	KEYWORD2
 getEncoderInvertMask	KEYWORD2
 setImuAxisUp	KEYWORD2

@@ -39,8 +39,14 @@ void setup() {
   p.tcpOffsetXMm = 0.0f;
   p.tcpOffsetYMm = 0.0f;
   p.imuScalar = 1.0f;  // from the spin-ten-turns calibration
-  p.portX = 0;         // forward pod on encoder channel 0
-  p.portY = 1;         // strafe pod on encoder channel 1
+
+  // WHICH ENCODER CHANNELS THE PODS ARE ON. Any two of 0-3, as long as they
+  // differ and both are set — the localizer refuses to start otherwise. Both
+  // must stay in QUADRATURE mode: a channel switched to PULSE_WIDTH measures
+  // a pulse width rather than counting ticks and cannot drive the pose.
+  p.portX = 0;  // pod that rolls when the robot drives forward/back
+  p.portY = 1;  // pod that rolls when the robot strafes left/right
+
   if (!expander.setLocalizerParams(p)) {
     Serial.print(F("Bad localizer parameters: "));
     Serial.println(expander.lastErrorText());
@@ -48,6 +54,16 @@ void setup() {
       delay(1000);
     }
   }
+
+  // DIRECTION. The localizer needs forward and left travel to BOTH count
+  // positive. It reads the channels itself, so flipping a sign in this sketch
+  // never reaches it — fix it here instead.
+  //
+  // Push the robot to find out which way each pod counts: driving forward
+  // should raise the X count, strafing left should raise Y. If one goes the
+  // wrong way, change its Forward to Reverse.
+  expander.setEncoderDirection(0, BBREncoderDirection::Forward);  // X pod
+  expander.setEncoderDirection(1, BBREncoderDirection::Forward);  // Y pod
   expander.saveConfigToFlash();
 
   startLocalizer();
