@@ -3,7 +3,7 @@
  * GENERATED FILE — DO NOT EDIT. Regenerated from the protocol definition
  * whenever the register map changes.
  *
- * Protocol contract 1.1. Multi-byte values are little-endian.
+ * Protocol contract 1.2. Multi-byte values are little-endian.
  * What each register means: https://expander.buildingblockrobotics.com/
  */
 #ifndef BBR_REGMAP_H
@@ -14,7 +14,7 @@
  * ------------------------------------------------------------------ */
 
 #define BBR_PROTOCOL_MAJOR_VALUE 1
-#define BBR_PROTOCOL_MINOR_VALUE 1
+#define BBR_PROTOCOL_MINOR_VALUE 2
 #define BBR_DEVICE_ID_VALUE      0xB2
 #define BBR_I2C_ADDR_DEFAULT     0x38  /* 7-bit */
 #define BBR_I2C_ADDR_MIN         0x38
@@ -57,6 +57,7 @@
 #define BBR_REG_CLASS_CONFIDENCE_COUNT 4
 #define BBR_REG_SENSOR_STATUS          0x39  /* u8[4], R */
 #define BBR_REG_SENSOR_STATUS_COUNT    4
+#define BBR_REG_TELEMETRY_CRC16        0x3D  /* u16, R */
 #define BBR_REG_TELEMETRY_TIMESTAMP    0x68  /* u32, R */
 #define BBR_REG_SENSOR_TYPE            0x6C  /* u8[4], R */
 #define BBR_REG_SENSOR_TYPE_COUNT      4
@@ -109,6 +110,10 @@
 #define BBR_REG_LOC_H                  0xEC  /* i16, R */
 #define BBR_REG_LOC_TIMESTAMP          0xF0  /* u32, R */
 #define BBR_REG_LOC_CRC16              0xF4  /* u16, R */
+#define BBR_REG_RESET_CAUSE            0xF6  /* u8, R */
+#define BBR_REG_RESETS_SINCE_POWER_ON  0xF7  /* u8, R */
+#define BBR_REG_I2C_RECOVERY_COUNT     0xF8  /* u16, R */
+#define BBR_REG_I2C_ARB_LOST_COUNT     0xFA  /* u16, R */
 
 /* ------------------------------------------------------------------
  * Raw sensor channel block: base + stride*port + field offset
@@ -320,6 +325,17 @@
 #define BBR_STYPE_UNKNOWN  0xFF
 
 /* ------------------------------------------------------------------
+ * RESET_CAUSE values
+ * ------------------------------------------------------------------ */
+
+#define BBR_RESET_UNKNOWN  0
+#define BBR_RESET_POWER_ON 1
+#define BBR_RESET_RUN_PIN  2
+#define BBR_RESET_WATCHDOG 3
+#define BBR_RESET_SOFTWARE 4
+#define BBR_RESET_DEBUG    5
+
+/* ------------------------------------------------------------------
  * HW_VARIANT values
  * ------------------------------------------------------------------ */
 
@@ -431,6 +447,8 @@
 #define BBR_SNAP_IMU_END           0xBF  /* inclusive */
 #define BBR_SNAP_LOCALIZER_START   0xE0
 #define BBR_SNAP_LOCALIZER_END     0xF5  /* inclusive */
+#define BBR_SNAP_DIAGNOSTICS_START 0xF6
+#define BBR_SNAP_DIAGNOSTICS_END   0xFB  /* inclusive */
 
 /* ------------------------------------------------------------------
  * Flash persistence
