@@ -260,6 +260,13 @@ bool BBRDigitalExpander::begin() {
                       "mis-assembled board"));
     }
     _capabilities = id[BBR_REG_CAPABILITIES];
+    // Carry on from the last token the board accepted. The board keeps its
+    // command cache until it reboots, but this sketch starts over with every
+    // reset: counting from 1 again would make the first command replay
+    // (silently not run) or fail ERR_TOKEN_REUSE whenever it lands on the
+    // cached token. On a failed read, keep the current token.
+    uint8_t lastToken;
+    if (readRegisters(BBR_REG_COMMAND_TOKEN, &lastToken, 1)) _token = lastToken;
     _begun = true;
     return succeed();
 }
